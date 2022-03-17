@@ -56,7 +56,9 @@ const Auth = Router()
                     else userData.guilds = json;
                 }
             }
-
+            if (req.dashboardConfig.test) {
+                console.log(tokens)
+             }
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
@@ -65,6 +67,7 @@ const Auth = Router()
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark"
             if (req.dashboardConfig.test) {
+                console.log(
                 console.log(req.session.user)
             }
         } else {
