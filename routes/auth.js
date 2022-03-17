@@ -30,6 +30,7 @@ const Auth = Router()
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark";
+	});
     });
     .get("/logout", [CheckAuth], function (req, res) {
         req.session.destroy();
