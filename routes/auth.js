@@ -67,7 +67,6 @@ const Auth = Router()
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark"
             if (req.dashboardConfig.test) {
-                console.log(
                 console.log(req.session.user)
             }
         } else {
