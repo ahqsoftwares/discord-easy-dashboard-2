@@ -64,6 +64,9 @@ const Auth = Router()
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark"
+            if (req.dashboardConfig.test) {
+                console.log(req.session.user)
+            }
         } else {
             res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client?.user?.id}&scope=identify%20email%20guilds&response_type=code&redirect_uri=${encodeURIComponent(`${req.dashboardConfig.baseUrl}${req.dashboardConfig.noPortIncallbackUrl ? '' : ':' + req.dashboardConfig.port}/auth/login`)}`);
         }
