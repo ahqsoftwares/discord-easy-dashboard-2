@@ -28,6 +28,6 @@
         "express-session": "^1.17.2",
         "morgan": "^1.10.0",
         "serve-favicon": "^2.5.0",
-        "discord-oauth2: "latest"
+        "discord-oauth2": "latest"
     }
 }
