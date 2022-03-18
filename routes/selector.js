@@ -60,7 +60,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
             filter_server: true,
-            email: req.session.user.data.email
+            email: Boolean(req.session.user.data.email),
         },
         (err, html) => {
             if (err) {
@@ -95,7 +95,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
             filter_server: false,
-            email: req.session.user.data.email
+            email: Boolean(req.session.user.data.email),
         },
         (err, html) => {
             if (err) {

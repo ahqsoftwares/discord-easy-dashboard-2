@@ -22,7 +22,7 @@ const Home = Router().get("/", async (req, res) => {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
-            email: req.session.user.data.email || null,
+            email: Boolean(req.session.user.data.email),
             alert: false
         },
         (err, html) => {
@@ -58,7 +58,7 @@ const Home = Router().get("/", async (req, res) => {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
-            email: req.session.user.data.email || null,
+            email: Boolean(req.session.user.data.email),
             alert: alert
         },
         (err, html) => {
