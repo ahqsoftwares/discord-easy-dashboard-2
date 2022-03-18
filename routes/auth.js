@@ -139,7 +139,7 @@ const Auth = Router()
     });
     async function main(data, r, sub, transporter) {
         // send mail with defined transport object
-        let info = await transporter.sendMail({
+        await transporter.sendMail({
           from: req.dashboardConfig.email_user, // sender address
           to: r, // list of receivers
           subject: `${sub}`, // Subject line
