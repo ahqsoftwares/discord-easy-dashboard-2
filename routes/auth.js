@@ -69,7 +69,7 @@ const Auth = Router()
                     else userData.guilds = json;
                 }
             }
-            if ((typeOf(req.file_old)) == undefined) {
+            if ((typeof(req.file_old)) == undefined) {
                 req.file_old = {
                     email: true,
                     filter: false
