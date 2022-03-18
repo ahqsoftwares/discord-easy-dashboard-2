@@ -168,10 +168,7 @@ class Dashboard extends EventEmitter {
                 case "/home":
                     routeName = "change";
                     break;
-                case "/emails/stop":
-                    routeName = "home";
-                    break;
-                case "/emails/start":
+                case "/emails":
                     routeName = "home";
                     break;
                 default:
