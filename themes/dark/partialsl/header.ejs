@@ -26,8 +26,19 @@
                 <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <% } %>
+              <% if(hasClientSecret) { %>
+                <% if (page == "commands") {%>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/commands">Commands</a>
+                  </li>
+                  <% } else { %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/commands">Commands</a>
+                    </li>
+                  <% } %>
+              <% } %>
             <% if(hasClientSecret) { %>
-              <% if (page == "dash") {%>
+              <% if (page == "dashboard") {%>
                 <li class="nav-item">
                   <a class="nav-link active" href="/selector">Dashboard</a>
                 </li>
