@@ -53,7 +53,7 @@ const Server = Router()
 
             if (setting.type === "boolean input") req.body[item] = Array.isArray(req.body[item]) ? true : false;
 
-            setting.set(req.client, guild, req.body[item]);
+            setting.set(req.client, guild, req.body[item], req.user);
         });
         let file = req.dashboardConfig.theme["guild"] || "guild.ejs";
 
