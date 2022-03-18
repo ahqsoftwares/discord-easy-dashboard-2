@@ -40,6 +40,7 @@ class Dashboard extends EventEmitter {
         this._commands = [];
         this._settings = [];
         this._mode = [];
+        this._func = [];
 
         this.config = {
             scopes: options?.scope || ["identify", "guilds", "email"],
@@ -123,6 +124,7 @@ class Dashboard extends EventEmitter {
             req.client = this.client;
             req.dashboardEmit = (...args) => this.emit(...args);
             req.dashboardSettings = this._settings;
+            req.changer = this._func[0][`func`] || null
 
             next();
         });
@@ -191,6 +193,12 @@ class Dashboard extends EventEmitter {
             description, 
             usage, 
             style: style
+        });
+    }
+
+    update_logger(code) {
+        this._func.push({
+            func: code
         });
     }
 

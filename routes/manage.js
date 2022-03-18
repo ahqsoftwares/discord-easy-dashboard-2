@@ -55,6 +55,9 @@ const Server = Router()
 
             setting.set(req.client, guild, req.body[item], req.user);
         });
+        if (req.changer) {
+        await req.changer(guild, req.user);
+        }
         let file = req.dashboardConfig.theme["guild"] || "guild.ejs";
 
         if (req.dashboardConfig.mode[req.user.id] == "light") {
