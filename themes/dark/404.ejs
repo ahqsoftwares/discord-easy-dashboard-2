@@ -2,7 +2,7 @@
 <div class="container-sm center" style="margin-top: 25px;">
     <div class="d-grid gap-2 col-6 mx-auto">
         <h1>Error</h1>
-        <% if (!(err)) {
+        <% if (typeof(err) == undefined) {
             err = "404"
         } %>
         <% if (err == "ahq_dash_perms_error") {%>
