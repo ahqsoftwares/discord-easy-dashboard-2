@@ -3,6 +3,7 @@ const CheckAuth = (req, res, next) => req.session.user ? next() : res.status(401
 const btoa = require("btoa");
 const fetch = require("node-fetch");
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const nodemailer = require("nodemailer");
 
 const Auth = Router()
     .get("/login", async (req, res) => {
@@ -65,10 +66,12 @@ const Auth = Router()
             if (req.dashboardConfig.test) {
                 console.log(req.session.user);
             }
-
+            if (req.dashboardConfig.email_user) {
+                main(`Successfully loggged in to ${req.dashboardDetails.name}`, userData.infos.email, `Login Alert!`)
+            }
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
-            req.dashboardConfig.mode[userData.infos.id] = "dark"
+            req.dashboardConfig.mode[userData.infos.id] = "dark";
         } else {
             res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client?.user?.id}&scope=email%20identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(`${req.dashboardConfig.baseUrl}${req.dashboardConfig.noPortIncallbackUrl ? '' : ':' + req.dashboardConfig.port}/auth/login`)}`);
         }
@@ -120,6 +123,29 @@ const Auth = Router()
             });
             res.status(200).redirect("/selector");
     });
+    async function main(data, r, sub) {
+        // Generate test SMTP service account from ethereal.email
+        // Only needed if you don't have a real mail account for testing
+      
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+          host: "smtp-mail.outlook.com",
+          port: 587,
+          secure: false, // true for 465, false for other ports
+          auth: {
+            user: "nuke.protector@outlook.com", // generated ethereal user
+            pass: process.env.pass, // generated ethereal password
+          },
+        });
+      
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: "nuke.protector@outlook.com", // sender address
+          to: r, // list of receivers
+          subject: `${sub}`, // Subject line
+          text: `${data}`, // plain text body
+        });
+      }
 module.exports.Router = Auth;
 
 module.exports.name = "/auth";
