@@ -44,8 +44,8 @@ const Home = Router().get("/", async (req, res) => {
         }
     );
 })
-.get("/alert/:alert", async (req, res) => {
-    const alert = req.client.guilds.cache.get(req.params.alert);
+.get("/alert/:ALERT", async (req, res) => {
+    const alert_n = req.client.guilds.cache.get(req.params.ALERT);
 
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
     if (req.user) {
@@ -69,7 +69,7 @@ const Home = Router().get("/", async (req, res) => {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             email: Boolean(req.session.user.data.email),
-            alert: alert
+            alert: alert_n
         },
         (err, html) => {
             if (err) {
