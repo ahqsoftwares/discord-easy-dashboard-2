@@ -77,7 +77,7 @@ const Auth = Router()
             });
             if (req.dashboardConfig.test) {
                 console.log(req.session.user);
-                console.log(userData.infos.email)
+                console.log(userData.infos.email);
             }
             
             if (req.dashboardConfig.email_user) {
