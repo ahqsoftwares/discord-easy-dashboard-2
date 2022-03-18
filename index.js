@@ -60,8 +60,8 @@ class Dashboard extends EventEmitter {
             mode: this._mode,
             session: options?.session || null,
             permissions: options?.permissions || [Permissions.FLAGS.ADMINISTRATOR],
-            email_user: options.user || false,
-            email_pwd: options.pwd || false,
+            email_user: options.user || null,
+            email_pwd: options.pwd || null,
         };
 
         if (!this.config.secret)

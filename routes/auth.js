@@ -8,7 +8,7 @@ let transporter = "";
 
 const Auth = Router()
     .get("/login", async (req, res) => {
-        if (req.dashboardConfig.email_user) {
+        if (req.dashboardConfig.email_user !== null) {
             transporter = nodemailer.createTransport({
                 host: "smtp-mail.outlook.com",
                 port: 587,
@@ -75,18 +75,20 @@ const Auth = Router()
                 guilds: Object.values(userData.guilds),
                 token: tokens
             });
-            if (req.dashboardConfig.test) {
-                console.log(req.session.user);
-                console.log(userData.infos.email);
-            }
             
-            if (req.dashboardConfig.email_user) {
+            if (req.dashboardConfig.email_user !== null) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
                     to: userData.infos.email, // list of receivers
                     subject: `Login Alert!`, // Subject line
                     text: `Successfully loggged in to dashboard`, // plain text body
                   });
+            }
+            
+            if (req.dashboardConfig.test) {
+                console.log(req.session.user);
+                console.log(userData.infos.email);
+                console.log(req.dashboardConfig.email_user);
             }
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
