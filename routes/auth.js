@@ -61,6 +61,10 @@ const Auth = Router()
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
             });
+            if (req.dashboardConfig.test) {
+                console.log(req.session.user)
+            }
+
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark"
