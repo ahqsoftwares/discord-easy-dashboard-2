@@ -124,8 +124,7 @@ class Dashboard extends EventEmitter {
             req.client = this.client;
             req.dashboardEmit = (...args) => this.emit(...args);
             req.dashboardSettings = this._settings;
-            req.changer = this._func || null
-
+            req.changer = this._func
             next();
         });
     }
