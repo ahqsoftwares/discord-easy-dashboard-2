@@ -70,7 +70,7 @@ const Auth = Router()
             res.status(200).redirect("/");
             req.dashboardConfig.mode[userData.infos.id] = "dark"
         } else {
-            res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client?.user?.id}&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(`${req.dashboardConfig.baseUrl}${req.dashboardConfig.noPortIncallbackUrl ? '' : ':' + req.dashboardConfig.port}/auth/login`)}`);
+            res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${req.client?.user?.id}&scope=email%20identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(`${req.dashboardConfig.baseUrl}${req.dashboardConfig.noPortIncallbackUrl ? '' : ':' + req.dashboardConfig.port}/auth/login`)}`);
         }
     })
     .get("/logout", [CheckAuth], function (req, res) {
