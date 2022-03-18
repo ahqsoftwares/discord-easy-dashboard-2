@@ -69,15 +69,17 @@ const Auth = Router()
                     else userData.guilds = json;
                 }
             }
-
+            if (!(req.file_old)) {
+                req.file_old = {
+                    email: true,
+                    filter: false
+                }
+            }
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
                 token: tokens,
-                data: {
-                    email: true,
-                    filter: false
-                }
+                data: req.file_old
             });
 
             if (req.dashboardConfig.email_user !== null && (req.file_old.email == null || req.file_old.email == true)) {
