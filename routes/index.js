@@ -2,12 +2,22 @@ const { Router } = require("express");
 
 const Home = Router().get("/", async (req, res) => {
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
+    let email_l = false;
     if (req.user) {
         if (!(req.dashboardConfig.mode[req.user.id])) {
             (req.dashboardConfig.mode[req.user.id]) = "dark";
         }
         if (req.dashboardConfig.mode[req.user.id] == "light") {
             file = req.dashboardConfig.theme["homel"] || "indexl.ejs";
+        }
+        try {
+        email_l = req.user.data.email;
+        } catch(e) {
+            email_l = true;
+            req.session.user.data = {
+                email: true,
+                filter: false
+            }
         }
     }
     return await res.render(
@@ -22,7 +32,7 @@ const Home = Router().get("/", async (req, res) => {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
-            email: Boolean(req.session.user.data.email),
+            email: email_l,
             alert: false
         },
         (err, html) => {

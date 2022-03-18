@@ -69,20 +69,23 @@ const Auth = Router()
                     else userData.guilds = json;
                 }
             }
-            if ((typeof(req.file_old)) == undefined) {
-                req.file_old = {
-                    email: true,
-                    filter: false
-                }
-            }
+            // if ((typeof(req.file_old)) == undefined) {
+            //     req.file_old = {
+            //         email: true,
+            //         filter: false
+            //     }
+            // }
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
                 token: tokens,
-                data: req.file_old
+                data: {
+                    email: true,
+                    filter: false
+                }
             });
 
-            if (req.dashboardConfig.email_user !== null && (req.file_old.email == null || req.file_old.email == true)) {
+            if (req.dashboardConfig.email_user !== null && (req.sesstion.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
                     to: userData.infos.email, // list of receivers
@@ -104,7 +107,7 @@ const Auth = Router()
         }
     })
     .get("/logout", [CheckAuth], function (req, res) {
-        req.file_old = req.session.user.data;
+        //req.file_old = req.session.user.data;
         req.session.destroy();
         res.status(200).redirect("/");
     })
