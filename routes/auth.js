@@ -85,7 +85,7 @@ const Auth = Router()
                     from: req.dashboardConfig.email_user, // sender address
                     to: userData.infos.email, // list of receivers
                     subject: `Login Alert!`, // Subject line
-                    text: `Successfully loggged in to ${req.dashboardDetails.name}`, // plain text body
+                    text: `Successfully loggged in to dashboard`, // plain text body
                   });
             }
             req.dashboardEmit("newUser", req.session.user);
