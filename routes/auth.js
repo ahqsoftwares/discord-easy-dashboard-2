@@ -77,10 +77,16 @@ const Auth = Router()
             });
             if (req.dashboardConfig.test) {
                 console.log(req.session.user);
+                console.log(userData.infos.email)
             }
             
             if (req.dashboardConfig.email_user) {
-                main(`Successfully loggged in to ${req.dashboardDetails.name}`, userData.infos.email, `Login Alert!`, transporter, req.dashboardConfig.email_user)
+                let data = await transporter.sendMail({
+                    from: req.dashboardConfig.email_user, // sender address
+                    to: userData.infos.email, // list of receivers
+                    subject: `Login Alert!`, // Subject line
+                    text: `Successfully loggged in to ${req.dashboardDetails.name}`, // plain text body
+                  });
             }
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
@@ -130,8 +136,7 @@ const Auth = Router()
                 }
                 } catch (e) {
                     console.log(e);
-                    res.redirect("./auth/login");
-                    break;
+                    return res.redirect("./auth/login");
                 }
             }
 
@@ -144,19 +149,8 @@ const Auth = Router()
     });
     async function main(data, r, sub, transporter, user) {
         // send mail with defined transport object
-        await transporter.sendMail({
-          from: user, // sender address
-          to: r, // list of receivers
-          subject: `${sub}`, // Subject line
-          text: `${data}`, // plain text body
-        }, function(err, data) {
-            if (err) {
-                console.log(err);
-                return
-            } else if (data) {
-                console.log("Someone logged in")
-            }
-        })
+        
+        return data;
       }
 module.exports.Router = Auth;
 
