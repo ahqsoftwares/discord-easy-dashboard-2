@@ -60,9 +60,10 @@ const Auth = Router()
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
+                token: tokens
             });
             if (req.dashboardConfig.test) {
-                console.log(req.session.user)
+                console.log(req.session.user);
             }
 
             req.dashboardEmit("newUser", req.session.user);
@@ -80,27 +81,8 @@ const Auth = Router()
         res.status(200).redirect("/auth/relog");
     })
     .get("/relog", [CheckAuth], async (req, res) => {
-        if (req.query.code) {
-            /* Obtain token - used to fetch user guilds and user informations */
-            const params = new URLSearchParams();
-            params.set("grant_type", "authorization_code");
-            params.set("code", req.query.code);
-            params.set(
-                "redirect_uri",
-                `${req.dashboardConfig.baseUrl}${req.dashboardConfig.noPortIncallbackUrl ? '' : ':' + req.dashboardConfig.port}/auth/login`
-            );
-            let response = await fetch("https://discord.com/api/oauth2/token", {
-                method: "POST",
-                body: params.toString(),
-                headers: {
-                    Authorization: `Basic ${btoa(
-                        `${req.client.user.id}:${req.dashboardConfig.secret}`
-                    )}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            });
             // Fetch tokens (used to fetch user informations)
-            const tokens = await response.json();
+            const tokens = req.session.user.token;
             // If the code isn't valid
             
             if (tokens.error || !tokens.access_token) return res.redirect("/auth/login");
@@ -134,13 +116,9 @@ const Auth = Router()
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
+                token: tokens
             });
-            req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/selector");
-            req.dashboardConfig.mode[userData.infos.id] = "dark"
-        } else {
-            res.redirect(`/auth/login`);
-        }
     });
 module.exports.Router = Auth;
 
