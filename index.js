@@ -116,7 +116,7 @@ class Dashboard extends EventEmitter {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
             res.setHeader("Access-Control-Allow-Credentials", true);
-
+            
             req.user = req.session.user;
             req.dashboardConfig = this.config;
             req.dashboardDetails = this.details;
@@ -167,6 +167,12 @@ class Dashboard extends EventEmitter {
                     break;
                 case "/home":
                     routeName = "change";
+                    break;
+                case "/emails/stop":
+                    routeName = "home";
+                    break;
+                case "/emails/start":
+                    routeName = "home";
                     break;
                 default:
                     routeName = route.name.split("/")[1];

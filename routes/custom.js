@@ -10,6 +10,16 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
         if (req.dashboardConfig.mode[req.user.id] == "light") {
             file = req.dashboardConfig.theme["405"] || "404l.ejs";
         }
+        let err_type = "404";
+        if (path == "ahq_dash_perms_error") {
+            err_type = path;
+        } else if (path == "ahq_dash_error") {
+            err_type = path;
+        } else if (path == "404") {
+            err_type = "404";
+        } else {
+            err_type = "404";
+        }
         return res.status(404).render(file, {
             bot: req.client,
             user: req.user,
@@ -20,6 +30,8 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
+            err: err_type,
+            email: req.session.user.data.email
         });
     }
     res.status(200).render(req.dashboardConfig.theme[path], {

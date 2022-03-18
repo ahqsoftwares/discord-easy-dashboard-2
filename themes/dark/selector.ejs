@@ -1,10 +1,18 @@
 <%- await include("./partials/header", { bot, user, path, title: "Select server", is_logged, dashboardDetails, dashboardConfig, hasClientSecret: true, page: "dashboard" }) %>
 <div class="container-sm center" style="margin-top: 25px;">
 <a class="btn btn-primary text-white" href="/auth/reset">Refresh servers</a>
+<% if (filter_server) {%>
+  <a class="btn btn-primary text-white" href="/selector/filter_false">Show All Servers</a>
+<% } else {%>
+  <a class="btn btn-primary text-white" href="/selector/filter">Hide inaccessible Servers</a>
+<% }%>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
   <% guilds.forEach(guild => {
       const permsOnGuild = new Perms(guild.permissions.toString());
+      if (filter_server) {
+        if(!permsOnGuild.has(dashboardConfig.permissions)) return;
+      }
   %>
     <div class="card" style="width: 18rem; margin: 2rem;">
     <%- guild.icon ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}" class="card-img-top" style="max-width: 18rem;">` : '<img src="https://cdn.discordapp.com/embed/avatars/0.png" class="card-img-top" style="max-width: 18rem;">' %>
@@ -17,7 +25,7 @@
           <a href="<%= dashboardDetails.inviteUrl ? dashboardDetails.inviteUrl : `https://discord.com/oauth2/authorize?client_id=${bot.user.id}&response_type=code&scope=bot applications.commands identify&permissions=8&guild_id=${guild.id}&redirect_uri=${dashboardConfig.baseUrl}/selector` %>" class="btn btn-primary text-white">Invite Bot</a>
         <% } %>
         <% } else {%>
-          <a href="/ahq_dash_perms_error" class="btn btn-danger text-white" disabled>Can't access</a>
+          <a href="/ahq_dash_perms_error" class="btn btn-danger text-white">You can't access</a>
         <% }%>
       </div>
     </div>

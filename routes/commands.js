@@ -29,7 +29,9 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
-            light: String(Boolean(req.dashboardConfig.mode[req.user.id] == "light"))
+            light: String(Boolean(req.dashboardConfig.mode[req.user.id] == "light")),
+            email: req.session.user.data.email
+
         },
         (err, html) => {
             if (err) {
@@ -42,7 +44,7 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
 })
 .get("/:guildID", [CheckAuth], async (req, res) => {
     const guild = req.client.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.status(405).redirect("/405_error");
+    if (!guild) return res.status(405).redirect("/404");
     if (req.dashboardCommands.length === 0) return res.redirect("/");
     let file = req.dashboardConfig.theme["commands"] || "commands.ejs";
 
@@ -61,6 +63,7 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             settings: req.dashboardSettings,
             commands: req.dashboardCommands,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
+            email: req.session.user.data.email
         },
         (err, html) => {
             if (err) {

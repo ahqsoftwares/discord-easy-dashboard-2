@@ -2,6 +2,11 @@
 
 </body>
 <div class="container-sm center" style="margin-top: 25px;">
+  <% if (alert) { %>
+    <div class="alert alert-success" role="alert">
+      <%= alert %>
+    </div>
+  <% } %>
   <div class="d-grid gap-2 col-6 mx-auto">
     <h2>Welcome to <%= dashboardDetails.name %> Dashboard!</h2>
     

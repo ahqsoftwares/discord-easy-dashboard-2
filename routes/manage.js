@@ -26,6 +26,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
+                email: req.session.user.data.email
             },
             (err, html) => {
                 if (err) {
@@ -80,6 +81,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
+                email: req.session.user.data.email
             },
             (err, html) => res.status(200).send(html)
         );

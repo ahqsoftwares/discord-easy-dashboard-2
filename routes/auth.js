@@ -73,10 +73,14 @@ const Auth = Router()
             // Update session
             req.session.user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
-                token: tokens
+                token: tokens,
+                data: {
+                    email: true,
+                    filter: false
+                }
             });
-            
-            if (req.dashboardConfig.email_user !== null) {
+
+            if (req.dashboardConfig.email_user !== null && (req.file_old.email == null || req.file_old.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
                     to: userData.infos.email, // list of receivers
@@ -98,6 +102,7 @@ const Auth = Router()
         }
     })
     .get("/logout", [CheckAuth], function (req, res) {
+        req.file_old = req.session.user.data;
         req.session.destroy();
         res.status(200).redirect("/");
     })
@@ -141,19 +146,18 @@ const Auth = Router()
                     return res.redirect("./auth/login");
                 }
             }
-
-            // Update session
-            req.session.user = Object.assign(userData.infos, {
+            let updated_user = Object.assign(userData.infos, {
                 guilds: Object.values(userData.guilds),
-                token: tokens
+                token: tokens,
+                data: {
+                    email: req.session.user.email || true,
+                    filter: req.session.user.filter || false
+                }
             });
+            // Update session
+            req.session.user = updated_user;
             res.status(200).redirect("/selector");
     });
-    async function main(data, r, sub, transporter, user) {
-        // send mail with defined transport object
-        
-        return data;
-      }
 module.exports.Router = Auth;
 
 module.exports.name = "/auth";
