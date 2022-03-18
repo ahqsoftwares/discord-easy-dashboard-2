@@ -108,6 +108,7 @@ const Auth = Router()
             };
             while (!userData.infos || !userData.guilds) {
                 /* User infos */
+                try {
                 if (!userData.infos) {
                     response = await fetch("http://discordapp.com/api/users/@me", {
                         method: "GET",
@@ -127,6 +128,11 @@ const Auth = Router()
                     if (json.retry_after) await delay(json.retry_after);
                     else userData.guilds = json;
                 }
+                } catch (e) {
+                    console.log(e);
+                    res.redirect("./auth/login");
+                    break;
+                }
             }
 
             // Update session
@@ -143,7 +149,14 @@ const Auth = Router()
           to: r, // list of receivers
           subject: `${sub}`, // Subject line
           text: `${data}`, // plain text body
-        });
+        }, function(err, data) {
+            if (err) {
+                console.log(err);
+                return
+            } else if (data) {
+                console.log("Someone logged in")
+            }
+        })
       }
 module.exports.Router = Auth;
 
