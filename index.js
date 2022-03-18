@@ -51,6 +51,7 @@ class Dashboard extends EventEmitter {
             secret: options?.secret,
             logRequests: options?.logRequests || false,
             injectCSS: options?.injectCSS || null,
+            injectCSSlight: options?.injectCSSl || null,
             theme: options?.theme
                 ? existsSync(join(__dirname, "themes", "dark"))
                     ? require(join(__dirname, "themes", "dark"))
