@@ -2,10 +2,8 @@
 <div class="container-sm center" style="margin-top: 25px;">
     <div class="d-grid gap-2 col-6 mx-auto">
         <h1>Error</h1>
-        <% if (typeof(err) == undefined) { %>
-            <h2>Not found</h2>
-        <a class="btn btn-secondary" href="/">Home</a>
-        <% } else {
+        <% 
+        try {
         if (err == "ahq_dash_perms_error") {%>
             <h2>You don't have permission to execute this</h2>
             <a class="btn btn-secondary" href="/selector">Dashboard</a>
@@ -15,9 +13,11 @@
         <% } else { %>
         <h2>Not found</h2>
         <a class="btn btn-secondary" href="/">Home</a>
-        <% } 
-            }
-        %>
+        <% }
+         } catch(e) { %>
+            <h2>Not found</h2>
+            <a class="btn btn-secondary" href="/">Home</a>
+         <% } %>
     </div>
 </div>
 <%- await include("partials/footer") %>
