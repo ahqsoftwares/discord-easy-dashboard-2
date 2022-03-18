@@ -6,20 +6,19 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const nodemailer = require("nodemailer");
 let transporter = "";
 
-if (req.dashboardConfig.email_user) {
-transporter = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: req.dashboardConfig.email_user, // generated ethereal user
-      pass: req.dashboardConfig.email_pwd, // generated ethereal password
-    },
-});
-}
-
 const Auth = Router()
     .get("/login", async (req, res) => {
+        if (req.dashboardConfig.email_user) {
+            transporter = nodemailer.createTransport({
+                host: "smtp-mail.outlook.com",
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                  user: req.dashboardConfig.email_user, // generated ethereal user
+                  pass: req.dashboardConfig.email_pwd, // generated ethereal password
+                },
+            });
+        }
         if (req.query.code) {
             /* Obtain token - used to fetch user guilds and user informations */
             const params = new URLSearchParams();
