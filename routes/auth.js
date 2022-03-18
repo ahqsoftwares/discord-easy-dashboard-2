@@ -4,6 +4,19 @@ const btoa = require("btoa");
 const fetch = require("node-fetch");
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const nodemailer = require("nodemailer");
+let transporter = "";
+
+if (req.dashboardConfig.email_user) {
+transporter = nodemailer.createTransport({
+    host: "smtp-mail.outlook.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: req.dashboardConfig.email_user, // generated ethereal user
+      pass: req.dashboardConfig.email_pwd, // generated ethereal password
+    },
+});
+}
 
 const Auth = Router()
     .get("/login", async (req, res) => {
@@ -66,8 +79,9 @@ const Auth = Router()
             if (req.dashboardConfig.test) {
                 console.log(req.session.user);
             }
+            
             if (req.dashboardConfig.email_user) {
-                main(`Successfully loggged in to ${req.dashboardDetails.name}`, userData.infos.email, `Login Alert!`)
+                main(`Successfully loggged in to ${req.dashboardDetails.name}`, userData.infos.email, `Login Alert!`, transporter)
             }
             req.dashboardEmit("newUser", req.session.user);
             res.status(200).redirect("/");
@@ -123,24 +137,10 @@ const Auth = Router()
             });
             res.status(200).redirect("/selector");
     });
-    async function main(data, r, sub) {
-        // Generate test SMTP service account from ethereal.email
-        // Only needed if you don't have a real mail account for testing
-      
-        // create reusable transporter object using the default SMTP transport
-        let transporter = nodemailer.createTransport({
-          host: "smtp-mail.outlook.com",
-          port: 587,
-          secure: false, // true for 465, false for other ports
-          auth: {
-            user: "nuke.protector@outlook.com", // generated ethereal user
-            pass: process.env.pass, // generated ethereal password
-          },
-        });
-      
+    async function main(data, r, sub, transporter) {
         // send mail with defined transport object
         let info = await transporter.sendMail({
-          from: "nuke.protector@outlook.com", // sender address
+          from: req.dashboardConfig.email_user, // sender address
           to: r, // list of receivers
           subject: `${sub}`, // Subject line
           text: `${data}`, // plain text body
