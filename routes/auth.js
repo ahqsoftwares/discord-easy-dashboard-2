@@ -85,7 +85,7 @@ const Auth = Router()
                 }
             });
 
-            if (req.dashboardConfig.email_user !== null && (req.sesstion.user.data.email == null || req.session.user.data.email == true)) {
+            if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
                     to: userData.infos.email, // list of receivers
