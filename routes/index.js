@@ -33,7 +33,8 @@ const Home = Router().get("/", async (req, res) => {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             email: email_l,
-            alert: false
+            alert: false,
+            hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
             if (err) {
@@ -69,7 +70,8 @@ const Home = Router().get("/", async (req, res) => {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             email: Boolean(req.session.user.data.email),
-            alert: alert_n
+            alert: alert_n,
+            hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
             if (err) {
