@@ -60,7 +60,8 @@
         </ul>
         <% if(hasClientSecret) { %>
           <ul class="navbar-nav">
-            <% if (user) { %>
+            <% if (hasemail) {
+            if (user) { %>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://cdn.discordapp.com/avatars/<%=user.id%>/<%=user.avatar%>.png", style="width: 30px;margin-bottom:3%;"alt="LOGO">
                   User Settings
@@ -80,7 +81,8 @@
               </li>
             <% } else { %>
               <li class="nav-item"><a href="/auth/login" class="nav-link">Login</a></li>
-            <% } %>
+            <% } 
+            }%>
           </ul>
         <% } %>
       </div>
