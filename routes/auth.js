@@ -84,7 +84,8 @@ const Auth = Router()
                     filter: false
                 }
             });
-            res.cookie("auth", tokens.access_token, {
+            res.cookie("auth", {
+                auth: tokens.access_token,
                 email: true,
                 filter: false
             });
