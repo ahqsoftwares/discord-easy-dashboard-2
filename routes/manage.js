@@ -83,6 +83,7 @@ const Server = Router()
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
                 email: Boolean(req.session.user.data.email),
+                hasemail: Boolean(req.dashboardConfig.user)
             },
             (err, html) => res.status(200).send(html)
         );
