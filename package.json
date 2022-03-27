@@ -28,6 +28,7 @@
         "express-session": "^1.17.2",
         "morgan": "^1.10.0",
         "serve-favicon": "^2.5.0",
-        "nodemailer": "latest"
+        "nodemailer": "latest",
+        "cookie-parser": "^1"
     }
 }
