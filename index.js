@@ -4,6 +4,7 @@ const favicon = require("serve-favicon");
 const { existsSync, readdirSync } = require("fs");
 const { join } = require("path");
 const ejs = require("ejs");
+const cookieParser = require('cookie-parser');
 const { EventEmitter } = require("events");
 const {
     Permissions
@@ -20,7 +21,8 @@ class Dashboard extends EventEmitter {
         this.client = client;
 
         this.app = express();
-
+        this.app.use(cookieParser())
+        
         this.details = {
             name: options?.name || client?.user?.username || null,
             description: options?.description || null,
