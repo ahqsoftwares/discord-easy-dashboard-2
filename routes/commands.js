@@ -31,7 +31,7 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             light: String(Boolean(req.dashboardConfig.mode[req.user.id] == "light")),
             email: Boolean(req.session.user.data.email),
-
+            hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
             if (err) {
