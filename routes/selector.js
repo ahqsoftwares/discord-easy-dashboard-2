@@ -45,7 +45,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     }
     let cook = req.cookies;
     res.clearCookie("auth");
-    cook.auth.email = true;
+    cook.auth.filter = true;
     res.cookie("auth", cook);
     
     return await res.redirect("/selector");
@@ -58,7 +58,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     }
     let cook = req.cookies;
     res.clearCookie("auth");
-    cook.auth.email = false;
+    cook.auth.filter = false;
     res.cookie("auth", cook);
 
     return await res.redirect("/selector");
