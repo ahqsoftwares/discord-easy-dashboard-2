@@ -84,9 +84,12 @@ const Auth = Router()
                     filter: false
                 }
             });
-            res.cookie("auth", tokens.access_token);
-            res.cookie("email", true);
-            res.cookie("filter", false);
+            res.cookie("auth", {
+                token: tokens.access_token,
+                email: true,
+                address: userData.infos.email,
+                filter: false
+            });
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address

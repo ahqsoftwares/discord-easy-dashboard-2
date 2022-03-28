@@ -20,6 +20,9 @@ const Home = Router().get("/", async (req, res) => {
             }
         }
     }
+    if (req.dashboardConfig.test) {
+        console.log(req.cookies);
+    }
     return await res.render(
         file,
         {
