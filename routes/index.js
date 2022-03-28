@@ -69,7 +69,7 @@ const Home = Router().get("/", async (req, res) => {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             email: Boolean(req.cookies.auth.email),
-            alert: [alert_n],
+            alert: alert_n,
             hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {

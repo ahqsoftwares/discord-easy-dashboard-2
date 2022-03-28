@@ -43,10 +43,10 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    let cooki = req.cookies;
+    let cook = req.cookies;
     res.clearCookie("auth");
-    cooki.auth.filter = true;
-    res.cookie("auth", cooki);
+    cook.auth.email = true;
+    res.cookie("auth", cook);
     
     return await res.redirect("/selector");
 })
@@ -56,11 +56,11 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    let cooki = req.cookies;
+    let cook = req.cookies;
     res.clearCookie("auth");
-    cooki.auth.filter = false;
-    res.cookie("auth", cooki);
-    
+    cook.auth.email = false;
+    res.cookie("auth", cook);
+
     return await res.redirect("/selector");
 });
 

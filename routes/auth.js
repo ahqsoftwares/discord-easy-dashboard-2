@@ -84,12 +84,14 @@ const Auth = Router()
                     filter: false
                 }
             });
-            res.cookie("auth", {
-                token: tokens.access_token,
-                email: true,
-                address: userData.infos.email,
-                filter: false
-            });
+            if (!(req.cookies)) {
+                res.cookie("auth", {
+                    token: tokens.access_token,
+                    email: true,
+                    address: userData.infos.email,
+                    filter: false
+                });
+            }
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
@@ -114,7 +116,7 @@ const Auth = Router()
     .get("/logout", [CheckAuth], function (req, res) {
         //req.file_old = req.session.user.data;
         req.session.destroy();
-        res.status(200).clearCookie("auth").redirect("/");
+        res.status(200).redirect("/");
     })
     .get("/reset", [CheckAuth], function(req, res) {
         res.status(200).redirect("/auth/relog");
