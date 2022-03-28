@@ -44,7 +44,7 @@ const Home = Router().get("/", async (req, res) => {
         }
     );
 })
-.get("/:NAME", async (req, res) => {
+.get("/a/:NAME", async (req, res) => {
     const alert_n = req.client.guilds.cache.get(req.params.NAME);
 
     let file = req.dashboardConfig.theme["home"] || "index.ejs";

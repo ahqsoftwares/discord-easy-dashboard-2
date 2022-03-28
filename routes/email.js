@@ -5,14 +5,14 @@ const Email = Router().get("/start", async (req, res) => {
     res.clearCookie("auth");
     cook.auth.email = true;
     res.cookie("auth", cook);
-    return await res.redirect("/Successfully updated!");
+    return await res.redirect("/a/Successfully updated!");
 })
 .get("/stop", async (req, res) => {
     let cook = req.cookies;
     res.clearCookie("auth");
     cook.auth.email = false;
     res.cookie("auth", cook);
-    return await res.redirect("/Successfully Updated!");
+    return await res.redirect("/a/Successfully Updated!");
 })
 
 module.exports.Router = Email;
