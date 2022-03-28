@@ -68,10 +68,12 @@
                   <!-- <li><hr class="dropdown-divider"></li> -->
                   <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
                   <li><a class="dropdown-item" href="/auth/reset">Refresh Servers</a></li>
+                  <% if (hasemail) {%>
                   <%if (email) { %>
                     <li><a class="dropdown-item" href="/emails/stop">Don't send emails</a></li>
                   <% } else { %> 
                     <li><a class="dropdown-item" href="/emails/start">Send emails</a></li>
+                  <% } %>
                   <% } %>
                   <li><a class="dropdown-item" href="/home">Dark Mode</a></li>
                 </ul>
