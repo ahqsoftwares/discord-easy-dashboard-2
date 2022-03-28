@@ -84,7 +84,7 @@ const Auth = Router()
                     filter: false
                 }
             });
-            if (!(req.cookies)) {
+            if (typeof(req.cookies) == undefined || typeof(req.cookies.token) == null) {
                 res.cookie("auth", {
                     token: tokens.access_token,
                     email: true,
