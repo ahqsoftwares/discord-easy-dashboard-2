@@ -24,7 +24,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             port: req.dashboardConfig.port,
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
-            filter_server: req.session.user.data.filter,
+            filter_server: req.cookies.auth.filter,
             email: Boolean(req.cookies.auth.email),
             hasemail: Boolean(req.dashboardConfig.user)
         },
@@ -43,7 +43,10 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    req.session.user.data.filter = true;
+    let cooki = req.cookies;
+    res.clearCookie("auth");
+    cooki.auth.filter = true;
+    res.cookie("auth", cooki);
     
     return await res.redirect("/selector");
 })
@@ -53,8 +56,11 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    req.session.user.data.filter = false;
-
+    let cooki = req.cookies;
+    res.clearCookie("auth");
+    cooki.auth.filter = false;
+    res.cookie("auth", cooki);
+    
     return await res.redirect("/selector");
 });
 
