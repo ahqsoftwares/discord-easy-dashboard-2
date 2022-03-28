@@ -114,7 +114,7 @@ const Auth = Router()
     .get("/logout", [CheckAuth], function (req, res) {
         //req.file_old = req.session.user.data;
         req.session.destroy();
-        res.status(200).redirect("/");
+        res.status(200).clearCookie("auth").redirect("/");
     })
     .get("/reset", [CheckAuth], function(req, res) {
         res.status(200).redirect("/auth/relog");

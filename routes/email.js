@@ -1,12 +1,18 @@
 const { Router } = require("express");
 
 const Email = Router().get("/start", async (req, res) => {
-    req.session.user.data.email = true;
-    return await res.redirect("/alert/Successfully updated!");
+    let cook = req.cookies;
+    res.clearCookie("auth");
+    cook.auth.email = true;
+    res.cookie("auth", cook);
+    return await res.redirect("/Successfully updated!");
 })
 .get("/stop", async (req, res) => {
-    req.session.user.data.email = false;
-    return await res.redirect("/alert/Successfully Updated!");
+    let cook = req.cookies;
+    res.clearCookie("auth");
+    cook.auth.email = false;
+    res.cookie("auth", cook);
+    return await res.redirect("/Successfully Updated!");
 })
 
 module.exports.Router = Email;

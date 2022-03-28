@@ -26,7 +26,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
-                email: Boolean(req.session.user.data.email),
+                email: Boolean(req.cookies.auth.email),
                 hasemail: Boolean(req.dashboardConfig.user)
             },
             (err, html) => {
@@ -82,7 +82,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
-                email: Boolean(req.session.user.data.email),
+                email: Boolean(req.cookies.auth.email),
                 hasemail: Boolean(req.dashboardConfig.user)
             },
             (err, html) => res.status(200).send(html)

@@ -25,7 +25,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
             filter_server: req.session.user.data.filter,
-            email: Boolean(req.session.user.email),
+            email: Boolean(req.cookies.auth.email),
             hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {

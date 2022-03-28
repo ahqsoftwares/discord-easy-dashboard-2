@@ -31,7 +31,7 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             err: err_type,
-            email: Boolean(req.session.user.data.email),
+            email: Boolean(req.cookies.auth.email),
             hasemail: Boolean(req.dashboardConfig.user)
         });
     }
@@ -45,7 +45,7 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
         port: req.dashboardConfig.port,
         hasClientSecret: Boolean(req.dashboardConfig.secret),
         commands: req.dashboardCommands,
-        email: Boolean(req.session.user.data.email),
+        email: Boolean(req.cookies.auth.email),
         hasemail: Boolean(req.dashboardConfig.user)
     });
 });

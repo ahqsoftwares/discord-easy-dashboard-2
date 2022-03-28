@@ -11,13 +11,9 @@ const Home = Router().get("/", async (req, res) => {
             file = req.dashboardConfig.theme["homel"] || "indexl.ejs";
         }
         try {
-        email_l = req.user.data.email;
+        email_l = req.cookies.auth.email;
         } catch(e) {
             email_l = true;
-            req.session.user.data = {
-                email: true,
-                filter: false
-            }
         }
     }
     if (req.dashboardConfig.test) {
@@ -48,8 +44,8 @@ const Home = Router().get("/", async (req, res) => {
         }
     );
 })
-.get("/alert/:ALERT", async (req, res) => {
-    const alert_n = req.client.guilds.cache.get(req.params.ALERT);
+.get("/:NAME", async (req, res) => {
+    const alert_n = req.client.guilds.cache.get(req.params.NAME);
 
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
     if (req.user) {
@@ -72,8 +68,8 @@ const Home = Router().get("/", async (req, res) => {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
-            email: Boolean(req.session.user.data.email),
-            alert: alert_n,
+            email: Boolean(req.cookies.auth.email),
+            alert: [alert_n],
             hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
