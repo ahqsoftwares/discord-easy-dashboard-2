@@ -84,14 +84,12 @@ const Auth = Router()
                     filter: false
                 }
             });
-            if (typeof(req.cookies) == undefined || typeof(req.cookies.token) == null) {
-                res.cookie("auth", {
-                    token: tokens.access_token,
-                    email: true,
-                    address: userData.infos.email,
-                    filter: false
-                });
-            }
+            res.cookie("auth", {
+               token: tokens.access_token,
+               email: true,
+               address: userData.infos.email,
+               filter: false
+            });
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
