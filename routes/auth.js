@@ -87,7 +87,7 @@ const Auth = Router()
             });
             res.cookie("auth", tokens.access_token);
             localStorage.setItem("auth", tokens.access_token);
-            localStorage.setItem("email", false);
+            localStorage.setItem("email", true);
             localStorage.setItem("filter", false);
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
