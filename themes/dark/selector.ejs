@@ -2,7 +2,7 @@
 <div class="container-sm center" style="margin-top: 25px;">
   <div class="d-grid gap-2 col-6 mx-auto">
 <a class="btn btn-secondary text-white" href="/auth/reset">Refresh servers</a>
-<% if (filter_server == true) {%>
+<% if (filter_server) {%>
   <a class="btn btn-primary text-white" href="/selector/filter_false">Show All Servers</a>
 <% } else {%>
   <a class="btn btn-success text-white" href="/selector/filter">Hide inaccessible Servers</a>

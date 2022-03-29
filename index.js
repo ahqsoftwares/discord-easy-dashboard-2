@@ -66,6 +66,7 @@ class Dashboard extends EventEmitter {
             permissions: options?.permissions || [Permissions.FLAGS.ADMINISTRATOR],
             email_user: options.user || null,
             email_pwd: options.pwd || null,
+            user: ((Boolean(options.user)) || false)
         };
 
         if (!this.config.secret)

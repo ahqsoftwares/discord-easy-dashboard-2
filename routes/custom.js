@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const CheckAuth = (req, res, next) =>
     req.session.user ? next() : res.status(401).redirect("/auth/login");
-const localStorage = require("localStorage");
 
 const Commands = Router().get("/*", [CheckAuth], function (req, res) {
     const path = req.baseUrl.split("/").pop();
@@ -32,7 +31,7 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
             err: err_type,
-            email: Boolean(localStorage.getItem("email")),
+            email: Boolean(req.session.user.data.email),
             hasemail: Boolean(req.dashboardConfig.user)
         });
     }
@@ -46,7 +45,7 @@ const Commands = Router().get("/*", [CheckAuth], function (req, res) {
         port: req.dashboardConfig.port,
         hasClientSecret: Boolean(req.dashboardConfig.secret),
         commands: req.dashboardCommands,
-        email: Boolean(localStorage.getItem("email")),
+        email: Boolean(req.session.user.data.email),
         hasemail: Boolean(req.dashboardConfig.user)
     });
 });

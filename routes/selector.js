@@ -2,7 +2,6 @@ const { Router } = require("express");
 const CheckAuth = (req, res, next) =>
     req.session.user ? next() : res.status(401).redirect("/auth/login");
 const { Permissions } = require("discord.js");
-const localStorage = require("localStorage");
 
 const Selector = Router().get("/", CheckAuth, async (req, res) => {
     let file = req.dashboardConfig.theme["selector"] || "selector.ejs";
@@ -25,8 +24,8 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             port: req.dashboardConfig.port,
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
-            filter_server: Boolean(localStorage.getItem("filter")),
-            email: Boolean(localStorage.getItem("email")),
+            filter_server: req.session.user.data.filter,
+            email: Boolean(req.session.user.email),
             hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
@@ -44,7 +43,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    await localStorage.setItem("filter", true);
+    req.session.user.data.filter = true;
     
     return await res.redirect("/selector");
 })
@@ -54,7 +53,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    await localStorage.setItem("filter", false);
+    req.session.user.data.filter = false;
 
     return await res.redirect("/selector");
 });

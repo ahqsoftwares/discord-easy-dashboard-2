@@ -3,7 +3,6 @@ const CheckAuth = (req, res, next) =>
     req.session.user ? next() : res.status(401).redirect("/auth/login");
 var name = "/commands";
 const { Permissions } = require("discord.js");
-const localStorage = require('localStorage');
 
 const Commands = Router().get("/", [CheckAuth], async (req, res) => {
     if (req.dashboardCommands.length === 0) return res.redirect("/");
@@ -31,7 +30,7 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             dashboardConfig: req.dashboardConfig,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             light: String(Boolean(req.dashboardConfig.mode[req.user.id] == "light")),
-            email: Boolean(localStorage.getItem("email")),
+            email: Boolean(req.session.user.data.email),
             hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
@@ -64,7 +63,7 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             settings: req.dashboardSettings,
             commands: req.dashboardCommands,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
-            email: Boolean(localStorage.getItem("email"))
+            email: req.session.user.data.email
         },
         (err, html) => {
             if (err) {

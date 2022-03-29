@@ -1,13 +1,12 @@
 const { Router } = require("express");
-const localStorage = require('localStorage');
 
 const Email = Router().get("/start", async (req, res) => {
-    await localStorage.setItem("email", true);
-    return await res.redirect("/a/Successfully updated!");
+    req.session.user.data.email = true;
+    return await res.redirect("/alert/Successfully updated!");
 })
 .get("/stop", async (req, res) => {
-    await localStorage.setItem("email", false);
-    return await res.redirect("/a/Successfully Updated!");
+    req.session.user.data.email = false;
+    return await res.redirect("/alert/Successfully Updated!");
 })
 
 module.exports.Router = Email;

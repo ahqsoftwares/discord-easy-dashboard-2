@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const localStorage = require("localStorage");
 
 const Home = Router().get("/", async (req, res) => {
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
@@ -12,13 +11,14 @@ const Home = Router().get("/", async (req, res) => {
             file = req.dashboardConfig.theme["homel"] || "indexl.ejs";
         }
         try {
-            email_l = localStorage.getItem("email") || false;
+        email_l = req.user.data.email;
         } catch(e) {
             email_l = true;
+            req.session.user.data = {
+                email: true,
+                filter: false
+            }
         }
-    }
-    if (req.dashboardConfig.test) {
-        console.log(req.cookies);
     }
     return await res.render(
         file,
@@ -45,8 +45,8 @@ const Home = Router().get("/", async (req, res) => {
         }
     );
 })
-.get("/a/:NAME", async (req, res) => {
-    const alert_n = req.client.guilds.cache.get(req.params.NAME);
+.get("/alert/:ALERT", async (req, res) => {
+    const alert_n = req.client.guilds.cache.get(req.params.ALERT);
 
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
     if (req.user) {
@@ -69,7 +69,7 @@ const Home = Router().get("/", async (req, res) => {
             port: req.dashboardConfig.port,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
             commands: req.dashboardCommands,
-            email: Boolean(req.cookies.auth.email),
+            email: Boolean(req.session.user.data.email),
             alert: alert_n,
             hasemail: Boolean(req.dashboardConfig.user)
         },
