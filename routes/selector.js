@@ -4,6 +4,9 @@ const CheckAuth = (req, res, next) =>
 const { Permissions } = require("discord.js");
 
 const Selector = Router().get("/", CheckAuth, async (req, res) => {
+    if (req.query.guild_id) {
+        return res.redirect(`/manage/${req.query.guild_id}`);
+    }
     let file = req.dashboardConfig.theme["selector"] || "selector.ejs";
 
     if (req.dashboardConfig.mode[req.user.id] == "light") {
