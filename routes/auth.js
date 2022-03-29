@@ -86,12 +86,9 @@ const Auth = Router()
                 }
             });
             res.cookie("auth", tokens.access_token);
-            if ((typeof(localStorage.getItem("email"))) == undefined) {
-                localStorage.setItem("email", false);
-            }
-            if ((typeof(localStorage.getItem("filter"))) == undefined) {
-                localStorage.setItem("filter", false);
-            }
+            localStorage.setItem("auth", tokens.access_token);
+            localStorage.setItem("email", false);
+            localStorage.setItem("filter", false);
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address
