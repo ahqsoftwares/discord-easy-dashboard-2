@@ -56,6 +56,19 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     req.session.user.data.filter = false;
 
     return await res.redirect("/selector");
+})
+.get("/remove/:guildID", [CheckAuth], async (req, res) => {
+    const guild = req.client.guilds.cache.get(req.params.guildID);
+    
+    const member = await guild.members.fetch(req.user.id);
+    if (!member) return res.redirect("/selector");
+    if (!member.permissions.has("ADMINISTRATOR")) return res.redirect("/selector");
+
+    guild.leave().then(() => {
+        return await res.redirect("/selector");
+    }).catch((e) => {
+        return await res.redirect("/selector");
+    });
 });
 
 module.exports.Router = Selector;
