@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const CheckAuth = (req, res, next) =>
     req.session.user ? next() : res.status(401).redirect("/auth/login");
+const localStorage = require("localStorage");
 
 const Server = Router()
     .get("/:guildID", CheckAuth, async (req, res) => {
@@ -26,7 +27,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
-                email: Boolean(req.cookies.auth.email),
+                email: Boolean(localStorage.getItem("email")),
                 hasemail: Boolean(req.dashboardConfig.user)
             },
             (err, html) => {
@@ -82,7 +83,7 @@ const Server = Router()
                 dashboardDetails: req.dashboardDetails,
                 dashboardConfig: req.dashboardConfig,
                 settings: req.dashboardSettings,
-                email: Boolean(req.cookies.auth.email),
+                email: Boolean(localStorage.getItem("email")),
                 hasemail: Boolean(req.dashboardConfig.user)
             },
             (err, html) => res.status(200).send(html)

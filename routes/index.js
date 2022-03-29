@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const localStorage = require("localStorage");
 
 const Home = Router().get("/", async (req, res) => {
     let file = req.dashboardConfig.theme["home"] || "index.ejs";
@@ -11,7 +12,7 @@ const Home = Router().get("/", async (req, res) => {
             file = req.dashboardConfig.theme["homel"] || "indexl.ejs";
         }
         try {
-        email_l = req.cookies.auth.email;
+            email_l = localStorage.getItem("email") || false;
         } catch(e) {
             email_l = true;
         }

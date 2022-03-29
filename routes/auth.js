@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const nodemailer = require("nodemailer");
 let transporter = "";
+const localStorage = require('localStorage');
 
 const Auth = Router()
     .get("/login", async (req, res) => {
@@ -84,12 +85,13 @@ const Auth = Router()
                     filter: false
                 }
             });
-            res.cookie("auth", {
-               token: tokens.access_token,
-               email: true,
-               address: userData.infos.email,
-               filter: false
-            });
+            res.cookie("auth", tokens.access_token);
+            if ((typeof(localStorage.getItem("email"))) == undefined) {
+                localStorage.setItem("email", false);
+            }
+            if ((typeof(localStorage.getItem("filter"))) == undefined) {
+                localStorage.setItem("filter", false);
+            }
             if (req.dashboardConfig.email_user !== null && (req.session.user.data.email == null || req.session.user.data.email == true)) {
                 let data = await transporter.sendMail({
                     from: req.dashboardConfig.email_user, // sender address

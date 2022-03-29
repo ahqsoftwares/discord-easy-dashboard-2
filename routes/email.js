@@ -1,17 +1,12 @@
 const { Router } = require("express");
+const localStorage = require('localStorage');
 
 const Email = Router().get("/start", async (req, res) => {
-    let cook = req.cookies;
-    res.clearCookie("auth");
-    cook.auth.email = true;
-    res.cookie("auth", cook);
+    localStorage.setItem("email", true);
     return await res.redirect("/a/Successfully updated!");
 })
 .get("/stop", async (req, res) => {
-    let cook = req.cookies;
-    res.clearCookie("auth");
-    cook.auth.email = false;
-    res.cookie("auth", cook);
+    localStorage.setItem("email", false);
     return await res.redirect("/a/Successfully Updated!");
 })
 
