@@ -64,9 +64,9 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (!member) return res.redirect("/selector");
     if (!member.permissions.has("ADMINISTRATOR")) return res.redirect("/selector");
 
-    guild.leave().then(() => {
+    guild.leave().then(async() => {
         return await res.redirect("/selector");
-    }).catch((e) => {
+    }).catch(async (e) => {
         return await res.redirect("/selector");
     });
 });
