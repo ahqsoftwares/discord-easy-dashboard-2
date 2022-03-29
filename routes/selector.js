@@ -44,7 +44,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    localStorage.setItem("filter", "`a` == `a`");
+    await localStorage.setItem("filter", true);
     
     return await res.redirect("/selector");
 })
@@ -54,7 +54,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    localStorage.setItem("filter", "`a` == `b`");
+    await localStorage.setItem("filter", false);
 
     return await res.redirect("/selector");
 });
