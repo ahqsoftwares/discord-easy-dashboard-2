@@ -25,7 +25,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
             port: req.dashboardConfig.port,
             dashboardDetails: req.dashboardDetails,
             dashboardConfig: req.dashboardConfig,
-            filter_server: localStorage.getItem("filter"),
+            filter_server: Boolean(localStorage.getItem("filter")),
             email: Boolean(localStorage.getItem("email")),
             hasemail: Boolean(req.dashboardConfig.user)
         },
@@ -44,7 +44,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    localStorage.setItem("filter", true);
+    localStorage.setItem("filter", "`a` == `a`");
     
     return await res.redirect("/selector");
 })
@@ -54,7 +54,7 @@ const Selector = Router().get("/", CheckAuth, async (req, res) => {
     if (req.dashboardConfig.mode[req.user.id] == "light") {
         file = req.dashboardConfig.theme["selectorl"] || "selectorl.ejs";
     }
-    localStorage.setItem("filter", false);
+    localStorage.setItem("filter", "`a` == `b`");
 
     return await res.redirect("/selector");
 });
