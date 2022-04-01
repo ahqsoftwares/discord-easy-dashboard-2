@@ -63,7 +63,8 @@ const Commands = Router().get("/", [CheckAuth], async (req, res) => {
             settings: req.dashboardSettings,
             commands: req.dashboardCommands,
             hasClientSecret: Boolean(req.dashboardConfig.secret),
-            email: req.session.user.data.email
+            email: req.session.user.data.email,
+            hasemail: Boolean(req.dashboardConfig.user)
         },
         (err, html) => {
             if (err) {
